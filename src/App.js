@@ -4,6 +4,7 @@ import { useState } from "react";
 
 function App() {
   const [prompt, setPrompt] = useState("");
+  const [result, setResult] = useState('')
 
   const configuration = new Configuration({
     apiKey: process.env.REACT_APP_OPEINAI_API_KEY,
@@ -18,7 +19,7 @@ function App() {
       size: "1024x1024",
     });
 
-    console.log(response.data.data[0].url);
+    setResult(response.data.data[0].url);
   };
 
   return (
@@ -30,6 +31,8 @@ function App() {
         onChange={(e) => setPrompt(e.target.value)}
       />
       <button onClick={generateImage}>Generate an Image</button>
+
+      {result.length > 0 ?  <img className="result-image" src={result || ''} alt="result" /> : <></>}
     </div>
   );
 }
